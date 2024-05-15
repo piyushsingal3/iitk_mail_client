@@ -1,16 +1,4 @@
 # mailclient1
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A new Flutter project!![Untitled-2024-05-13-1155](https://github.com/piyushsingal3/iitk_mail_client/assets/157308982/e1339fb7-3cb3-456b-a305-20535126834e)
+![Untitled-2024-05-13-1155](https://github.com/piyushsingal3/iitk_mail_client/assets/157308982/e1339fb7-3cb3-456b-a305-20535126834e)
