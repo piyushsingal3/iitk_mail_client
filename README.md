@@ -1,9 +1,9 @@
 # mailclient1
 Laptop Screenshots
 ![Screenshot 2024-05-17 164932](https://github.com/piyushsingal3/iitk_mail_client/assets/157308982/6bf03458-09fb-4c6b-bca8-9e57395b1e70)
-Mobile Phone Screen Shots 
-![Screenshot 2024-05-17 165005](https://github.com/piyushsingal3/iitk_mail_client/assets/157308982/ffd46820-0b9d-450c-a6aa-8394e7ee162f)
 
+![Screenshot 2024-05-17 165005](https://github.com/piyushsingal3/iitk_mail_client/assets/157308982/ffd46820-0b9d-450c-a6aa-8394e7ee162f)
+Mobile Phone Screen Shots 
 ![WhatsApp Image 2024-05-17 at 17 43 28_277bae8b](https://github.com/piyushsingal3/iitk_mail_client/assets/157308982/7b5215a0-6ef1-474c-b396-29b4b5c8dd63)
 ![WhatsApp Image 2024-05-17 at 17 43 52_f6ed2e21](https://github.com/piyushsingal3/iitk_mail_client/assets/157308982/8ae8ffaa-4fe9-4bdb-b034-fd7614b0e126)
 ![WhatsApp Image 2024-05-17 at 17 43 33_23cc28cb](https://github.com/piyushsingal3/iitk_mail_client/assets/157308982/5a533945-5925-4bc8-81e0-39cdb7e5b3f4)
