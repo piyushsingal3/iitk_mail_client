@@ -45,7 +45,7 @@ class Login extends StatelessWidget {
                                     padding: const EdgeInsets.all(10.0),
                                     child: Text("Login to IITK",style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 30,fontWeight: FontWeight.w900,))),
                                   ),
-                                  //new Image.asset("images/iitkl.jpeg",width: 200,height: 200,),
+                                 
                                 ],
                               ),
                             ),

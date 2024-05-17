@@ -21,8 +21,6 @@ Widget build(BuildContext context){
            image: DecorationImage(
                image: AssetImage("images/iitk.jpeg"), fit: BoxFit.fill,opacity: 1,),
          ),
-         //child: Center(child: CreateAcc())
-         
       ), 
     );
 }

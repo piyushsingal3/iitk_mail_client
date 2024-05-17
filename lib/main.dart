@@ -31,13 +31,7 @@ Widget build(BuildContext context){
               
                return Row(
                  children: [
-                 SafeArea(
-            child: Container(
-              // constraints: BoxConstraints(maxWidth: 50),
-              
-             // child: NavigationBar(),
-            ),
-          ),
+                 
                    Expanded(child: Container(
                      constraints: BoxConstraints(minWidth: 800,),
                     

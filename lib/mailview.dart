@@ -45,7 +45,6 @@ class FirstPage extends StatelessWidget {
                          Container(height: 10, color: Colors.white),
             Expanded(
               child: ListView(
-                  // Note: use ListView.builder if there are many items
                   children: <Widget>[
                     Container(height: 0.5, color: Colors.black),
                      ListTile(
@@ -227,12 +226,6 @@ Widget build(BuildContext context ){
         ),
       ),
     )
-    
-     
-
-
-
-
   );
 
 
