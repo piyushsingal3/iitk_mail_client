@@ -4,6 +4,8 @@ import "package:flutter/widgets.dart";
 import 'package:google_fonts/google_fonts.dart';
 import "main.dart";
 import "createacc.dart";
+import 'package:enough_mail/enough_mail.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -163,7 +165,7 @@ class SplitView extends StatelessWidget {
             Container(width: 0.5, color: Colors.black),
            SizedBox(
             width: 600,
-            child: composemail(),
+            child: mailexpand(),
           ),
         ],
       );
@@ -180,8 +182,8 @@ class SplitView extends StatelessWidget {
     }
   }
 }
-class composemail extends StatelessWidget{
-    const composemail ({super.key});
+class mailexpand extends StatelessWidget{
+    const mailexpand ({super.key});
 
 @override
 Widget build(BuildContext context ){
@@ -243,49 +245,239 @@ class _AppMenuState extends State<AppMenu> {
     
       child: Scaffold(
         appBar: AppBar(title: Text('Menu',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 30,fontWeight: FontWeight.w800,color:Colors.black)))),
-        body: Expanded(
-          child: ListView(
-            // Note: use ListView.builder if there are many items
-            children: <Widget>[
-               MouseRegion(
-                 cursor: SystemMouseCursors.click,
-                 child: GestureDetector(
-                   child: ListTile(
-                              tileColor: tileColor,
-                             leading: Icon(Icons.inbox),
-                             title: Text('Inbox',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 20,color:Colors.black))),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                // Note: use ListView.builder if there are many items
+                children: <Widget>[
+                   MouseRegion(
+                     cursor: SystemMouseCursors.click,
+                     child: GestureDetector(
+                       child: ListTile(
+                                  tileColor: tileColor,
+                                 leading: Icon(Icons.inbox),
+                                 title: Text('Inbox',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 20,color:Colors.black))),
+                        ),
+                           onTap: () {
+              setState(() {
+                if(tileColor==Colors.white){
+                  tileColor=Colors.blue;
+                }
+                else{tileColor=Colors.white;}
+              });
+            },
+                         onDoubleTap: () {  Navigator.push(
+                                     context,
+                                       MaterialPageRoute(builder: (context) =>  mailexpand()),
+                                        );
+                                        tileColor:Colors.blue;}
+                     ),
+                   ),
+                    ListTile(
+              leading: Icon(Icons.send),
+              title: Text('Sent',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 20,color:Colors.black))),
                     ),
-                       onTap: () {
-          setState(() {
-            if(tileColor==Colors.white){
-              tileColor=Colors.blue;
-            }
-            else{tileColor=Colors.white;}
-          });
-        },
-                     onDoubleTap: () {  Navigator.push(
-                                 context,
-                                   MaterialPageRoute(builder: (context) =>  composemail()),
-                                    );
-                                    tileColor:Colors.blue;}
-                 ),
-               ),
-                ListTile(
-          leading: Icon(Icons.send),
-          title: Text('Sent',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 20,color:Colors.black))),
+              
+                    ListTile(
+              leading: Icon(Icons.star),
+              title: Text('Starred',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 20,color:Colors.black))),
+                    ),
+                     Container(
+                       child: MouseRegion(
+                         cursor: SystemMouseCursors.click,
+                         child: GestureDetector(
+                           child: ListTile(
+                                     leading: Icon(Icons.add),
+                                     title: Text('Compose Mail',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 20,color:Colors.black))),
+                                           ),
+                                             onTap: () {  Navigator.push(
+                                     context,
+                                       MaterialPageRoute(builder: (context) =>  Composemail()),
+                                        );
+                                  },
+                         ),
+                       ),
+                     ),
+                 
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+  class Composemail extends StatefulWidget {
+  const Composemail({super.key});
+
+  @override
+  _ComposemailState createState() => _ComposemailState();
+}
+
+class _ComposemailState extends State<Composemail> {
+  // final _fromController = TextEditingController();
+  // final _toController = TextEditingController();
+  // final _subjectController = TextEditingController();
+  // final _bodyController = TextEditingController();
+
+  // @override
+  // void dispose() {
+  //   _fromController.dispose();
+  //   _toController.dispose();
+  //   _subjectController.dispose();
+  //   _bodyController.dispose();
+  //   super.dispose();
+  // }
+ 
+String userName = 'psingal23@iitk.ac.in';
+String password = 'password';
+String smtpServerHost = 'smtp.cc.iitk.ac.in';
+int smtpServerPort = 465;
+bool isSmtpServerSecure = true;
+  
+ void send() async {
+  print('Sending email...');
+  await smtpExample();
+}
+  Future<void> smtpExample() async {
+  final client = SmtpClient('enough.de', isLogEnabled: true);
+  try {
+    await client.connectToServer(smtpServerHost, smtpServerPort,isSecure: isSmtpServerSecure);
+    await client.ehlo();
+    if (client.serverInfo.supportsAuth(AuthMechanism.plain)) {
+      await client.authenticate('psingal23@iitk.ac.in', 'password', AuthMechanism.plain);
+    } else if (client.serverInfo.supportsAuth(AuthMechanism.login)) {
+      await client.authenticate('psingal23@iitk.ac.in', 'password', AuthMechanism.login);
+    } else {
+      return;
+    }
+    final builder = MessageBuilder.prepareMultipartAlternativeMessage(
+      plainText: 'hello pradyumna this is mail send by piyush from flutter.',
+      htmlText: '<p>hello <b>world</b></p>',
+    )
+      ..from = [MailAddress('My name', 'psingal23@iitk.ac.in')]
+      ..to = [MailAddress('Your name', 'pdeshmukh23@iitk.ac.in')]
+      ..subject = 'My first message';
+    final mimeMessage = builder.buildMimeMessage();
+    final sendResponse = await client.sendMessage(mimeMessage);
+    print('message sent: ${sendResponse.isOkStatus}');
+  } on SmtpException catch (e) {
+    print('SMTP failed with $e');
+  }
+}
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Compose Mail",
+            style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black))),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(width: 20, height: 5),
+            Container(height: 0.5, color: Colors.black),
+            SizedBox(width: 20, height: 5),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text("From",
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black))),
                 ),
+                Expanded(
+                  child: TextFormField(
+                   // controller: _fromController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter Sender Mail',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: 5, height: 5),
+            Container(height: 0.5, color: Colors.black),
+            SizedBox(width: 5, height: 5),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text("To",
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black))),
+                ),
+                Expanded(
+                  child: TextFormField(
+                    //controller: _toController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter Receiver mail',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: 5, height: 5),
+            Container(height: 0.5, color: Colors.black),
+            SizedBox(width: 5, height: 5),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text("Subject",
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black))),
+                ),
+                Expanded(
+                  child: TextFormField(
+                   // controller: _subjectController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Subject',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(height: 0.5, color: Colors.black),
+            SizedBox(
+              height: 300,
+              child: TextFormField(
+                //controller: _bodyController,
+                maxLines: null,
+                expands: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Compose your mail here',
+                ),
+              ),
+            ),
           
-                ListTile(
-          leading: Icon(Icons.star),
-          title: Text('Starred',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 20,color:Colors.black))),
-                ),
-                 ListTile(
-          leading: Icon(Icons.add),
-          title: Text('Compose Mail',style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 20,color:Colors.black))),
-                ),
-             
-            ],
+             ElevatedButton(
+           onPressed: () async {
+  await smtpExample();
+},
+            child: Text('Press Me'),
           ),
+          ],
         ),
       ),
     );

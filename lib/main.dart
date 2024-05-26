@@ -8,7 +8,12 @@ import 'login.dart';
 import "home.dart";
 import "createacc.dart";
 import "mailview.dart";
-void main()=>runApp(MyApp());
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+Future main() async{
+  await dotenv.load(fileName: "lib/.env"  );
+  print(dotenv.env['VAR_NAME']);
+  runApp(MyApp());
+  }
 
 
 class MyApp extends StatelessWidget{
