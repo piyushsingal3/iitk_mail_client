@@ -11,7 +11,6 @@ import "mailview.dart";
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future main() async{
   await dotenv.load(fileName: "lib/.env"  );
-  print(dotenv.env['VAR_NAME']);
   runApp(MyApp());
   }
 

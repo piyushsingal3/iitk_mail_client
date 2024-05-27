@@ -318,22 +318,14 @@ class _AppMenuState extends State<AppMenu> {
 }
 
 class _ComposemailState extends State<Composemail> {
-  // final _fromController = TextEditingController();
-  // final _toController = TextEditingController();
-  // final _subjectController = TextEditingController();
-  // final _bodyController = TextEditingController();
+   final _fromController = TextEditingController();
+  final _toController = TextEditingController();
+   final _subjectController = TextEditingController();
+  final _bodyController = TextEditingController();
 
-  // @override
-  // void dispose() {
-  //   _fromController.dispose();
-  //   _toController.dispose();
-  //   _subjectController.dispose();
-  //   _bodyController.dispose();
-  //   super.dispose();
-  // }
+
  
-String userName = 'psingal23@iitk.ac.in';
-String password = 'password';
+
 String smtpServerHost = 'smtp.cc.iitk.ac.in';
 int smtpServerPort = 465;
 bool isSmtpServerSecure = true;
@@ -347,20 +339,22 @@ bool isSmtpServerSecure = true;
   try {
     await client.connectToServer(smtpServerHost, smtpServerPort,isSecure: isSmtpServerSecure);
     await client.ehlo();
+    await dotenv.load(fileName: "lib/.env"  );
     if (client.serverInfo.supportsAuth(AuthMechanism.plain)) {
-      await client.authenticate('psingal23@iitk.ac.in', 'password', AuthMechanism.plain);
+      await client.authenticate(dotenv.env["USERNAME"]!, dotenv.env["PASSWORD"]!, AuthMechanism.plain);
     } else if (client.serverInfo.supportsAuth(AuthMechanism.login)) {
-      await client.authenticate('psingal23@iitk.ac.in', 'password', AuthMechanism.login);
+      await client.authenticate(dotenv.env["USERNAME"]!, dotenv.env["PASSWORD"]!, AuthMechanism.login);
     } else {
       return;
     }
     final builder = MessageBuilder.prepareMultipartAlternativeMessage(
-      plainText: 'hello pradyumna this is mail send by piyush from flutter.',
+      plainText: _bodyController.text,
       htmlText: '<p>hello <b>world</b></p>',
     )
       ..from = [MailAddress('My name', 'psingal23@iitk.ac.in')]
-      ..to = [MailAddress('Your name', 'pdeshmukh23@iitk.ac.in')]
-      ..subject = 'My first message';
+      ..to = [MailAddress('Your name', _toController.text)]
+      ..subject =_subjectController.text;
+      
     final mimeMessage = builder.buildMimeMessage();
     final sendResponse = await client.sendMessage(mimeMessage);
     print('message sent: ${sendResponse.isOkStatus}');
@@ -398,7 +392,7 @@ bool isSmtpServerSecure = true;
                 ),
                 Expanded(
                   child: TextFormField(
-                   // controller: _fromController,
+                    controller: _fromController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter Sender Mail',
@@ -423,7 +417,7 @@ bool isSmtpServerSecure = true;
                 ),
                 Expanded(
                   child: TextFormField(
-                    //controller: _toController,
+                    controller: _toController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter Receiver mail',
@@ -448,7 +442,7 @@ bool isSmtpServerSecure = true;
                 ),
                 Expanded(
                   child: TextFormField(
-                   // controller: _subjectController,
+                    controller: _subjectController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Subject',
@@ -461,7 +455,7 @@ bool isSmtpServerSecure = true;
             SizedBox(
               height: 300,
               child: TextFormField(
-                //controller: _bodyController,
+                controller: _bodyController,
                 maxLines: null,
                 expands: true,
                 decoration: InputDecoration(
