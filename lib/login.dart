@@ -114,7 +114,7 @@ class Login extends StatelessWidget {
                                ),
                                 onTap: () {  Navigator.push(
                                    context,
-                                     MaterialPageRoute(builder: (context) =>  SplitView()),
+                                     MaterialPageRoute(builder: (context) =>  SplitView(from:"" ,to:"" ,date: "",content: "",subject:"")),
                                       );
                                 },
                              ),
@@ -122,44 +122,6 @@ class Login extends StatelessWidget {
                          ),
                     
                     
-                         Container(
-                          
-                          
-                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                             children: [
-                                MouseRegion(
-                                   cursor: SystemMouseCursors.click,  
-                                 child: GestureDetector(
-                                   child: Card(
-                                    
-                                    shape: RoundedRectangleBorder(
-                                         borderRadius: BorderRadius.circular(100.0),),
-                                         margin: EdgeInsets.all(20),
-                                         color: Color.fromARGB(255, 239, 241, 243),
-                                         child :Center(child: Text("Create Account ",style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 25,fontWeight: FontWeight.w800,color:Colors.black)))),
-                                          ),
-                                    onTap: () {  Navigator.push(
-                                   context,
-                                     MaterialPageRoute(builder: (context) => const CreateAccount()),
-                                      );
-                                         
-                                     },
-                                 ),
-                               ),
-                    
-                    
-                                Card(
-                                shape: RoundedRectangleBorder(
-                                     borderRadius: BorderRadius.circular(100.0),),
-                                     margin: EdgeInsets.all(20),
-                                     color: Color.fromARGB(255, 239, 241, 243),
-                                     child :Center(child: Text("Forgot Password ",style: GoogleFonts.poppins (textStyle:TextStyle(fontSize: 25,fontWeight: FontWeight.w800,color:Colors.black)))),
-                               ),
-                             ],
-                           ),
-                         ),
                          
                     ],
                   ),
