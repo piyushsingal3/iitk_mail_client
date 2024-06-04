@@ -1,9 +1,6 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import "main.dart";
-import "createacc.dart";
-import 'package:enough_mail/enough_mail.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import './Backend/Sendemail.dart';
 
 class ComposeMail extends StatefulWidget {
   const ComposeMail({super.key});
@@ -24,7 +21,16 @@ class _ComposeMailState extends State<ComposeMail> {
 
   void send() async {
     print('Sending email...');
-    bool success = await smtpExample();
+    final emailSender = EmailSender(
+      smtpServerHost: smtpServerHost,
+      smtpServerPort: smtpServerPort,
+      isSmtpServerSecure: isSmtpServerSecure,
+      fromAddress: _fromController.text,
+      toAddress: _toController.text,
+      subject: _subjectController.text,
+      body: _bodyController.text,
+    );
+    bool success = await emailSender.sendEmail();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -44,37 +50,6 @@ class _ComposeMailState extends State<ComposeMail> {
         );
       },
     );
-  }
-
-  Future<bool> smtpExample() async {
-    final client = SmtpClient('enough.de', isLogEnabled: true);
-    try {
-      await client.connectToServer(smtpServerHost, smtpServerPort, isSecure: isSmtpServerSecure);
-      await client.ehlo();
-      await dotenv.load(fileName: "lib/.env");
-      if (client.serverInfo.supportsAuth(AuthMechanism.plain)) {
-        await client.authenticate(dotenv.env["USERNAME"]!, dotenv.env["PASSWORD"]!, AuthMechanism.plain);
-      } else if (client.serverInfo.supportsAuth(AuthMechanism.login)) {
-        await client.authenticate(dotenv.env["USERNAME"]!, dotenv.env["PASSWORD"]!, AuthMechanism.login);
-      } else {
-        return false;
-      }
-      final builder = MessageBuilder.prepareMultipartAlternativeMessage(
-        plainText: _bodyController.text,
-        htmlText: '<p>hello <b>world</b></p>',
-      )
-        ..from = [MailAddress(_fromController.text, 'psingal23@iitk.ac.in')]
-        ..to = [MailAddress(_toController.text, _toController.text)]
-        ..subject = _subjectController.text;
-
-      final mimeMessage = builder.buildMimeMessage();
-      final sendResponse = await client.sendMessage(mimeMessage);
-      print('Message sent: ${sendResponse.isOkStatus}');
-      return sendResponse.isOkStatus;
-    } on SmtpException catch (e) {
-      print('SMTP failed with $e');
-      return false;
-    }
   }
 
   @override
